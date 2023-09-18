@@ -1,0 +1,22 @@
+{% extends 'bets/base.html' %}
+
+
+
+{% block title %} Add bet {% endblock %}
+
+
+{% block content %}
+    <h2> Add new bet</h2>
+
+    <form method="POST">
+        {{form.as_p}}
+        <button  class="btn btn-dark" type = "submit">Create</button>
+    </form>
+
+
+
+
+
+
+
+{% endblock %}

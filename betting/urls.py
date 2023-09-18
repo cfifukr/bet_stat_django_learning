@@ -6,6 +6,7 @@ from bets import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.main_page, name = "main_page"),
+    path('bet_add/', views.bet_add_page, name = "add_bet_page"),
 
 
 

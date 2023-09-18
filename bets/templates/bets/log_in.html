@@ -18,7 +18,7 @@
 
                   <form method="POST">
                       {% if error is not Null %}
-                        {{error}}
+                        <b>{{error}}</b>
                       {% endif %}
                       {%csrf_token%}
                     <div class="form-outline mb-4">
@@ -37,7 +37,7 @@
                         class="btn btn-dark btn-block btn-lg gradient-custom-4 text-light">Log In</button>
                     </div>
 
-                    <p class="text-center text-muted mt-5 mb-0">Don`t have an account? <a href="{% url 'sign_up_page' %}
+                    <p class="text-center text-muted mt-5 mb-0">Don`t have an account? <a href="{% url 'sign_up_page' %}"
                         class="fw-bold text-body"><u>Sign up</u></a></p>
 
                   </form>

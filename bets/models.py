@@ -4,9 +4,10 @@ from django.contrib.auth.models import User
 class bet_db(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null = True, default = 2)
     sport  = models.CharField(max_length=30)
+    tournament = models.CharField(max_length=50, blank = True)
     team1 =  models.CharField(max_length=25, blank=True)
     team2 = models.CharField(max_length=25, blank=True)
-    bet = models.CharField(max_length=25)
+    bet = models.CharField(max_length=50)
     odd = models.FloatField()
     amount = models.FloatField()
     result = models.BooleanField(default=False)
@@ -18,7 +19,7 @@ class bet_db(models.Model):
        verbose_name_plural = "bets"
 
     def __str__(self):
-        return self.bet + " " + self.team1 + " " + self.team2
+        return self.bet + " " + "(" + self.team1 + " vs " + self.team2 + ")"
 
 class balance_db(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default= 2)
