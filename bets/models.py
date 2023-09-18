@@ -19,7 +19,7 @@ class bet_db(models.Model):
        verbose_name_plural = "bets"
 
     def __str__(self):
-        return self.bet + " " + "(" + self.team1 + " vs " + self.team2 + ")"
+        return str("RETURN" if self.return_bet ==  True else ["WIN" if self.result == True else "LOST"]) + " " +  self.bet + " " + "(" + self.team1 + " vs " + self.team2 + ")"
 
 class balance_db(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default= 2)
