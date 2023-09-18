@@ -10,7 +10,9 @@ urlpatterns = [
 
 
     #auth
-    path('signup/', views.sign_up_page, name = "sign_up_page")
+    path('signup/', views.sign_up_page, name = "sign_up_page"),
+    path('login/', views.log_in_page, name = "log_in_page"),
+    path('logout/', views.log_out, name = "log_out_page")
 
 
 ]

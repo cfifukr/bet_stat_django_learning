@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import login, logout,authenticate
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+
 
 def main_page(request):
 
@@ -19,3 +22,22 @@ def sign_up_page(request):
 
         else :
             return render(request, 'bets/sign_up.html', {"error": "Password didn`t match"})
+
+@csrf_exempt
+def log_in_page(request):
+    if request.method == "GET":
+        return render(request, 'bets/log_in.html')
+    else:
+        user = authenticate(request, username = request.POST["username"], password = request.POST['password'])
+
+        if user is None:
+            return render(request, 'bets/log_in.html', {"error" : "No such a user"})
+        else:
+            login(request, user)
+            return redirect("main_page")
+
+@csrf_exempt
+def log_out(request):
+    if request.method == "POST":
+        logout(request)
+    return redirect("main_page")
