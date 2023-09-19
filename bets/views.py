@@ -3,7 +3,8 @@ from django.contrib.auth import login, logout,authenticate
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from .forms import BetAddForm
+from .forms import BetAddForm, TransactionAddForm
+from .models import balance_db, bet_db
 
 
 def main_page(request):
@@ -55,8 +56,50 @@ def bet_add_page(request):
 
         return render(request, 'bets/add_bet.html',data)
     else:
-        data_bet = BetAddForm(request.POST)
-        data_bet.save(commit=False)
+        bet = BetAddForm(request.POST)
+        data_bet = bet.save(commit=False)
         data_bet.user = request.user
         data_bet.save()
+        return redirect("bets_history_page")
+
+
+@login_required
+@csrf_exempt
+def transaction_add_page(request):
+    a = request.user
+    user_balance = balance_db.objects.get(user_id = a.id)
+    balance1 = float(user_balance.balance)
+
+    if request.method == "GET":
+        context = {
+            "form": TransactionAddForm,
+            "user_money" : balance1,
+
+
+        }
+        return render(request, 'bets/add_transaction.html', context)
+    else:
+        #transaction add
+        transaction = TransactionAddForm(request.POST)
+        transaction_data = transaction.save(commit=False)
+        transaction_data.user = request.user
+        transaction_data.save()
+
+        #change balance
+        trans_am = float(request.POST["amount"])
+
+        user_balance.balance = float(balance1 - trans_am if transaction_data.deposit else balance1 + trans_am)
+        user_balance.save()
         return redirect("main_page")
+
+
+def bets_history_page(request):
+    bets_data = bet_db.objects.filter(user=request.user).order_by("-date_added")
+
+    context = {
+        "bets_data": bets_data
+    }
+    return render(request, "bets/bets.html", context)
+
+
+

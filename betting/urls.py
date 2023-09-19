@@ -7,6 +7,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.main_page, name = "main_page"),
     path('bet_add/', views.bet_add_page, name = "add_bet_page"),
+    path('bet_transaction/', views.transaction_add_page, name = "add_transaction_page"),
+    path('bets/', views.bets_history_page, name = "bets_history_page"),
+
 
 
 
